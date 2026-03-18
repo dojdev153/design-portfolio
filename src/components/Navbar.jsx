@@ -11,6 +11,7 @@ const Navbar = () => {
                     <a href="#work" className="hover:text-accent-green transition-colors">Work</a>
                     <a href="#logos" className="hover:text-accent-green transition-colors">Logos</a>
                     <a href="#banners" className="hover:text-accent-green transition-colors">Banners</a>
+                    <a href="#about" className="hover:text-accent-green transition-colors">About</a>
                     <a href="#contact" className="hover:text-accent-green transition-colors">Contact</a>
                 </div>
 

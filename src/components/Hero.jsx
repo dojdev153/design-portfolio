@@ -58,7 +58,7 @@ const Hero = () => {
 
                 {/* Center Card */}
                 <motion.div
-                    className="relative mt-12 mb-16 mx-auto w-full max-w-lg aspect-[4/3] glass-card flex flex-col items-center justify-end p-8"
+                    className="relative mt-12 mb-16 mx-auto w-full max-w-lg aspect-[4/3] glass-card flex flex-col items-center justify-center p-12"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.3 }}
@@ -67,19 +67,19 @@ const Hero = () => {
                         border: '1px solid rgba(170, 255, 0, 0.2)'
                     }}
                 >
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full overflow-hidden border-4 border-accent-green shadow-[0_0_30px_rgba(170,255,0,0.3)]">
+                    <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-accent-green shadow-[0_0_30px_rgba(170,255,0,0.3)] mb-8">
                         <img src="/images/profile.png" alt="Frank Duff" className="w-full h-full object-cover" />
                     </div>
 
-                    <div className="w-full flex items-center justify-between">
+                    <div className="w-full flex items-center justify-between mt-auto">
                         <div className="text-xl font-bold flex items-center gap-2">
                             <span className="w-6 h-6 border-2 border-white rounded-full flex items-center justify-center text-[10px]">⊙</span>
                             HITAYEZU FRANK DUFF
                         </div>
-                        <div className="flex gap-3 text-gray-400">
-                            <span className="hover:text-white cursor-pointer transition-colors">🔖</span>
-                            <span className="hover:text-accent-red cursor-pointer transition-colors">❤️</span>
-                            <span className="hover:text-white cursor-pointer transition-colors">↗️</span>
+                        <div className="flex gap-3 items-center">
+                            <span className="text-xl filter drop-shadow-[0_0_8px_rgba(255,0,0,0.5)]">🔖</span>
+                            <span className="text-xl filter drop-shadow-[0_0_8px_rgba(255,0,0,0.5)]">❤️</span>
+                            <span className="text-xl filter drop-shadow-[0_0_8px_rgba(0,170,255,0.5)]">↗️</span>
                         </div>
                     </div>
                 </motion.div>

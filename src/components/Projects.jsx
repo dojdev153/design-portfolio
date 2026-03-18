@@ -9,7 +9,7 @@ const Projects = () => {
             description: 'A comprehensive trading platform with real-time data.',
             image: '/images/Tradewise.png',
             figma: 'https://www.figma.com/design/6rkXfF8HKFZLJaCO7DgySA/TradeWise?node-id=0-1&t=ol7c353hcVLE98Un-1',
-            live: null
+            live: 'https://trade-wise-beryl.vercel.app/'
         },
         {
             name: 'Akaguriroo',
