@@ -24,7 +24,7 @@ const Projects = () => {
             description: 'An innovative navigation assistant for the visually impaired using advanced sensor technology.',
             image: '/images/brailleWalk.png',
             figmaLink: 'https://www.figma.com/design/tXb1IzzS0Sg8OxJHamquYY/BrailleWalk?node-id=0-1&t=AlCvhcXmXHrXsSOD-1',
-            liveLink: '#',
+            liveLink: null,
             tags: ['UX Design', 'Accessibility', 'IoT']
         },
         {
@@ -94,14 +94,16 @@ const Projects = () => {
                                     >
                                         Figma Link
                                     </a>
-                                    <a
-                                        href={project.liveLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="px-6 py-3 bg-accent-green/10 hover:bg-accent-green/20 border border-accent-green/20 rounded-xl text-xs font-bold uppercase tracking-widest text-accent-green transition-all"
-                                    >
-                                        Live Demo
-                                    </a>
+                                    {project.liveLink && (
+                                        <a
+                                            href={project.liveLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="px-6 py-3 bg-accent-green/10 hover:bg-accent-green/20 border border-accent-green/20 rounded-xl text-xs font-bold uppercase tracking-widest text-accent-green transition-all"
+                                        >
+                                            Live Demo
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>

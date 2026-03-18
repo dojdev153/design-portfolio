@@ -12,7 +12,7 @@ const Contact = () => {
                     transition={{ duration: 0.8 }}
                 >
                     <h2 className="text-accent-red font-display text-lg font-bold tracking-widest uppercase mb-4">Get In Touch</h2>
-                    <h3 className="text-5xl md:text-7xl font-display font-black text-white italic mb-12">Let's Create Together</h3>
+                    <h3 className="text-5xl md:text-7xl font-display font-black text-white italic mb-12 uppercase">Let's Create Together</h3>
 
                     <div className="glass-card border-white/5 p-10 rounded-[40px] mb-12">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left mb-10">
@@ -21,12 +21,17 @@ const Contact = () => {
                                 <a href="mailto:hitayezufrank@gmail.com" className="text-xl text-white hover:text-accent-green transition-colors">hitayezufrank@gmail.com</a>
                             </div>
                             <div>
-                                <h4 className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Social</h4>
+                                <h4 className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Follow Me</h4>
                                 <div className="flex gap-4">
-                                    <a href="#" className="w-10 h-10 rounded-full glass-card border-white/10 flex items-center justify-center hover:text-accent-green transition-all">FB</a>
-                                    <a href="#" className="w-10 h-10 rounded-full glass-card border-white/10 flex items-center justify-center hover:text-accent-green transition-all">IG</a>
-                                    <a href="#" className="w-10 h-10 rounded-full glass-card border-white/10 flex items-center justify-center hover:text-accent-green transition-all">TW</a>
-                                    <a href="#" className="w-10 h-10 rounded-full glass-card border-white/10 flex items-center justify-center hover:text-accent-green transition-all">IN</a>
+                                    <a
+                                        href="https://www.instagram.com/hitayezufrank/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="h-12 px-6 rounded-full glass-card border-white/10 flex items-center justify-center hover:text-accent-green hover:border-accent-green/50 transition-all gap-2 text-xs font-bold uppercase tracking-widest"
+                                    >
+                                        <span>Instagram</span>
+                                        <span className="text-lg">↗</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
