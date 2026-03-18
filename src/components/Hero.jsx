@@ -5,45 +5,13 @@ const Hero = () => {
     const tools = [
         { name: 'Adobe Photoshop', color: 'rgba(49, 168, 255, 0.2)', border: '#31a8ff', delay: 0 },
         { name: 'Adobe XD', color: 'rgba(255, 97, 241, 0.2)', border: '#ff61f1', delay: 0.5 },
-        { name: 'Figma', color: 'rgba(162, 89, 255, 0.2)', border: '#a259ff', delay: 1 },
+        { name: 'Figma', color: 'rgba(162, 89, 255, 0.2)', border: '#a259ff', delay: 10 },
         { name: 'Framer', color: 'rgba(0, 85, 255, 0.2)', border: '#0055ff', delay: 1.5 },
         { name: 'Canva', color: 'rgba(0, 196, 204, 0.2)', border: '#00c4cc', delay: 2 },
     ];
 
     return (
         <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-6 overflow-hidden">
-            {/* Floating Pills */}
-            <div className="absolute inset-0 pointer-events-none">
-                {tools.map((tool, index) => (
-                    <motion.div
-                        key={tool.name}
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{
-                            opacity: 1,
-                            y: [0, -20, 0],
-                        }}
-                        transition={{
-                            y: {
-                                duration: 4,
-                                repeat: Infinity,
-                                ease: "easeInOut",
-                                delay: tool.delay
-                            },
-                            opacity: { duration: 1, delay: 0.5 + index * 0.1 }
-                        }}
-                        className="absolute glass px-4 py-2 rounded-full text-xs font-bold border"
-                        style={{
-                            backgroundColor: tool.color,
-                            borderColor: tool.border,
-                            top: `${20 + (index * 15)}%`,
-                            left: `${10 + (index * 18) % 70}%`,
-                            zIndex: 10
-                        }}
-                    >
-                        {tool.name}
-                    </motion.div>
-                ))}
-            </div>
 
             <div className="max-w-7xl mx-auto text-center z-20">
                 <motion.h1
@@ -67,8 +35,62 @@ const Hero = () => {
                         border: '1px solid rgba(170, 255, 0, 0.2)'
                     }}
                 >
-                    <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-accent-green shadow-[0_0_30px_rgba(170,255,0,0.3)] mb-8">
-                        <img src="/images/profile.png" alt="Frank Duff" className="w-full h-full object-cover" />
+                    {/* Revolving Tools Container */}
+                    <div className="relative mb-8 flex items-center justify-center">
+                        {/* Profile Image */}
+                        <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-accent-green shadow-[0_0_30px_rgba(170,255,0,0.3)] relative z-10">
+                            <img src="/images/profile.png" alt="Frank Duff" className="w-full h-full object-cover" />
+                        </div>
+
+                        {/* Revolving Tools */}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            {tools.map((tool, i) => {
+                                const radius = 150; // distance from center
+                                const initialAngle = (i * (360 / tools.length));
+
+                                return (
+                                    <motion.div
+                                        key={tool.name}
+                                        initial={{ opacity: 0 }}
+                                        animate={{
+                                            opacity: 1,
+                                            rotate: [initialAngle, initialAngle + 360]
+                                        }}
+                                        transition={{
+                                            rotate: {
+                                                duration: 20,
+                                                repeat: Infinity,
+                                                ease: "linear"
+                                            },
+                                            opacity: { duration: 1 }
+                                        }}
+                                        className="absolute"
+                                        style={{
+                                            width: radius * 2,
+                                            height: radius * 2,
+                                        }}
+                                    >
+                                        <motion.div
+                                            animate={{
+                                                rotate: [-initialAngle, -(initialAngle + 360)]
+                                            }}
+                                            transition={{
+                                                duration: 20,
+                                                repeat: Infinity,
+                                                ease: "linear"
+                                            }}
+                                            className="absolute top-0 left-1/2 -translate-x-1/2 glass px-4 py-2 rounded-full whitespace-nowrap text-[10px] font-bold tracking-widest border pointer-events-auto"
+                                            style={{
+                                                backgroundColor: tool.color,
+                                                borderColor: tool.border
+                                            }}
+                                        >
+                                            {tool.name}
+                                        </motion.div>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
                     </div>
 
                     <div className="w-full flex items-center justify-between mt-auto">
@@ -95,7 +117,7 @@ const Hero = () => {
                             className="aspect-square glass-card hover:border-accent-green transition-all cursor-pointer group"
                         >
                             <img
-                                src={`/images/${i === 1 ? 'Tradewise.png' : i === 2 ? 'akaguriroo.png' : i === 3 ? 'brailleWalk.png' : 'banner.png'}`}
+                                src={`/images/${i === 1 ? 'Tradewise.png' : i === 2 ? 'akaguriroo.png' : i === 3 ? 'brailleWalk.png' : 'portfolio.png'}`}
                                 alt="Work thumbnail"
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                             />

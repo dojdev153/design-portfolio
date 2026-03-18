@@ -1,81 +1,82 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 
 const Banners = () => {
+    const [selectedImage, setSelectedImage] = useState(null);
+
     const banners = [
-        {
-            id: 1,
-            image: '/images/banner.png',
-            title: 'Marketing Campaign Banner',
-            tool: 'Photoshop'
-        }
+        { id: 1, image: '/images/banner.png', title: 'Marketing Banner 1' },
+        { id: 2, image: '/images/banner.png', title: 'Marketing Banner 2' },
+        { id: 3, image: '/images/banner.png', title: 'Corporate Branding' },
+        { id: 4, image: '/images/banner.png', title: 'Social Media Kit' },
     ];
 
-    const [selectedBanner, setSelectedBanner] = useState(null);
-
     return (
-        <section id="banners" className="py-24 px-6 md:px-12 bg-background/50">
+        <section id="banners" className="py-32 px-6 bg-[#0a0a0a]">
             <div className="max-w-7xl mx-auto">
-                <h2 className="text-4xl font-display font-bold mb-12">Banner Designs</h2>
+                <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-20"
+                >
+                    <h2 className="text-accent-green font-display text-lg font-bold tracking-widest uppercase mb-4">Visual Design</h2>
+                    <h3 className="text-5xl md:text-7xl font-display font-black text-white italic">Banner Designs</h3>
+                </motion.div>
 
-                <div className="grid grid-cols-1 gap-8">
-                    {banners.map((banner) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {banners.map((banner, index) => (
                         <motion.div
                             key={banner.id}
-                            className="relative group glass-card overflow-hidden cursor-pointer"
-                            whileHover={{ y: -10 }}
-                            onClick={() => setSelectedBanner(banner)}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.1 }}
+                            onClick={() => setSelectedImage(banner.image)}
+                            className="relative aspect-video overflow-hidden rounded-2xl glass-card border-white/5 cursor-pointer group"
                         >
-                            <img src={banner.image} alt={banner.title} className="w-full aspect-[21/9] object-cover" />
-
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all flex flex-col items-center justify-center gap-4">
-                                <Maximize2 className="text-accent-green w-10 h-10" />
-                                <div className="text-center">
-                                    <p className="text-xl font-bold">{banner.title}</p>
-                                    <span className="text-xs uppercase tracking-widest text-accent-green">{banner.tool}</span>
-                                </div>
+                            <img
+                                src={banner.image}
+                                alt={banner.title}
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span className="px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white text-xs font-bold tracking-widest uppercase">
+                                    View Full Design
+                                </span>
                             </div>
                         </motion.div>
                     ))}
                 </div>
-
-                {/* Lightbox */}
-                <AnimatePresence>
-                    {selectedBanner && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 bg-black/95 backdrop-blur-xl"
-                            onClick={() => setSelectedBanner(null)}
-                        >
-                            <button
-                                className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
-                                onClick={() => setSelectedBanner(null)}
-                            >
-                                <X size={40} />
-                            </button>
-
-                            <motion.div
-                                initial={{ scale: 0.9, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0.9, opacity: 0 }}
-                                className="relative max-w-7xl w-full glass-card border-none"
-                                onClick={(e) => e.stopPropagation()}
-                            >
-                                <img src={selectedBanner.image} alt={selectedBanner.title} className="w-full h-auto" />
-                                <div className="p-6 bg-black/50 backdrop-blur-md flex items-center justify-between">
-                                    <div>
-                                        <h3 className="text-xl font-bold">{selectedBanner.title}</h3>
-                                        <p className="text-accent-green text-sm uppercase tracking-widest">Created with {selectedBanner.tool}</p>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </div>
+
+            {/* Lightbox Modal */}
+            <AnimatePresence>
+                {selectedImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedImage(null)}
+                        className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-12 cursor-zoom-out"
+                    >
+                        <motion.img
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            src={selectedImage}
+                            alt="Full view"
+                            className="max-w-full max-h-full object-contain rounded-xl"
+                        />
+                        <button
+                            className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors text-4xl"
+                            onClick={() => setSelectedImage(null)}
+                        >
+                            ×
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };

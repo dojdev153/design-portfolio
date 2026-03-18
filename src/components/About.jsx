@@ -2,51 +2,65 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const About = () => {
-    const skills = ['Figma', 'Adobe Photoshop', 'Framer', 'Canva', 'Adobe XD'];
+    const skills = [
+        'Visual Design', 'UI/UX Design', 'Branding', 'Photography',
+        'Figma', 'Photoshop', 'Adobe XD', 'Framer', 'Canva',
+        'Logo Design', 'Web Design', 'Typography', 'Illustration'
+    ];
 
     return (
-        <section id="about" className="py-24 px-6 md:px-12">
-            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
-                {/* Left Side: Text */}
+        <section id="about" className="py-32 px-6 bg-[#060806] relative overflow-hidden">
+            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+                {/* Image Section */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="flex-1"
+                    transition={{ duration: 0.8 }}
+                    className="w-full lg:w-1/2 relative"
                 >
-                    <h2 className="text-4xl font-display font-bold mb-6">About Me</h2>
-                    <p className="text-gray-400 text-lg leading-relaxed mb-8">
-                        Hello! I'm <span className="text-white font-bold">HITAYEZU FRANK DUFF</span>, a UI/UX & Graphic Designer based in <span className="text-accent-green">Rwanda, Kigali 📍</span>.
-                        With 1.5 years of experience, I specialize in creating futuristic, user-centric digital experiences and bold visual identities.
-                        My approach combines glassmorphism, high-contrast layouts, and intuitive interaction design to make products stand out.
-                    </p>
-
-                    <div className="space-y-4">
-                        <h3 className="text-md font-bold uppercase tracking-widest text-gray-500">Core Expertise</h3>
-                        <div className="flex flex-wrap gap-3">
-                            {skills.map(skill => (
-                                <span key={skill} className="px-5 py-2 glass rounded-full text-sm font-bold border-accent-green/20 text-accent-green">
-                                    {skill}
-                                </span>
-                            ))}
-                        </div>
+                    <div className="relative z-10 rounded-[40px] overflow-hidden glass-card border-white/10 aspect-square group shadow-2xl">
+                        <img
+                            src="/images/profile.png"
+                            alt="HITAYEZU FRANK DUFF"
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
                     </div>
+                    {/* Decorative Elements */}
+                    <div className="absolute -top-10 -left-10 w-40 h-40 bg-accent-green/20 rounded-full blur-[80px]" />
+                    <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-accent-red/10 rounded-full blur-[80px]" />
                 </motion.div>
 
-                {/* Right Side: Profile Card */}
+                {/* Content Section */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="flex-1 w-full max-w-md aspect-square glass-card p-4 relative"
+                    transition={{ duration: 0.8 }}
+                    className="w-full lg:w-1/2"
                 >
-                    <div className="w-full h-full rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700">
-                        <img src="/images/profile.png" alt="Frank Duff" className="w-full h-full object-cover" />
-                    </div>
+                    <h2 className="text-accent-green font-display text-lg font-bold tracking-widest uppercase mb-4">About Me</h2>
+                    <h3 className="text-5xl md:text-7xl font-display font-black text-white italic mb-8">Creative Designer</h3>
 
-                    {/* Decorative Elements */}
-                    <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent-green/20 rounded-full blur-3xl" />
-                    <div className="absolute -top-6 -left-6 w-32 h-32 bg-accent-lime/20 rounded-full blur-3xl" />
+                    <p className="text-gray-400 text-lg leading-relaxed mb-10">
+                        I'm HITAYEZU FRANK DUFF, a passionate Visual & Digital Designer with over 1.5 years of experience crafting premium digital experiences. I specialize in merging aesthetics with functionality to create interfaces that not only look stunning but also feel alive.
+                    </p>
+
+                    <div className="flex flex-wrap gap-3">
+                        {skills.map((skill, index) => (
+                            <motion.span
+                                key={skill}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.05 }}
+                                className="px-5 py-2 rounded-full glass-card border-white/5 text-[10px] font-bold text-white uppercase tracking-widest hover:border-accent-green transition-colors"
+                            >
+                                {skill}
+                            </motion.span>
+                        ))}
+                    </div>
                 </motion.div>
             </div>
         </section>
