@@ -2,8 +2,6 @@ import { useRef } from 'react'
 
 export default function GlitchProfile({ phase = 'profile' }) {
   const containerRef = useRef(null)
-
-  const isGlitching = phase === 'glitching' || phase === 'unglitching'
   const showPoster = phase === 'poster' || phase === 'unglitching'
 
   return (
@@ -23,20 +21,23 @@ export default function GlitchProfile({ phase = 'profile' }) {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: opacity 0.1s;
+          object-position: top center;
         }
 
+        /* Profile: ALWAYS visible by default */
         .glitch-img--profile {
           filter: grayscale(100%);
           z-index: 1;
+          opacity: 1;
         }
 
+        /* Poster: hidden by default */
         .glitch-img--poster {
           z-index: 2;
           opacity: 0;
         }
 
-        /* Poster visible */
+        /* Show poster ONLY during poster phase */
         .glitch-container.phase-poster .glitch-img--poster,
         .glitch-container.phase-unglitching .glitch-img--poster {
           opacity: 1;
@@ -46,23 +47,22 @@ export default function GlitchProfile({ phase = 'profile' }) {
           opacity: 0;
         }
 
-        /* ── True Image Glitch Slices ── */
+        /* Glitch slice animation */
         .glitch-container.phase-glitching .glitch-img,
         .glitch-container.phase-unglitching .glitch-img {
           animation: imageSlices 0.15s steps(1) forwards;
         }
 
         @keyframes imageSlices {
-          0%   { clip-path: inset(10% 0 80% 0); transform: translateX(-8px);  filter: hue-rotate(90deg)  brightness(1.3); }
-          15%  { clip-path: inset(60% 0 20% 0); transform: translateX(10px);  filter: hue-rotate(180deg) brightness(1.1); }
-          30%  { clip-path: inset(30% 0 50% 0); transform: translateX(-5px) skewX(2deg); filter: hue-rotate(270deg); }
-          45%  { clip-path: inset(70% 0 5% 0);  transform: translateX(12px);  filter: hue-rotate(0deg)   brightness(1.4); }
-          60%  { clip-path: inset(5% 0 70% 0);  transform: translateX(-10px); filter: hue-rotate(90deg); }
-          75%  { clip-path: inset(45% 0 30% 0); transform: translateX(6px);   filter: brightness(1.2); }
-          100% { clip-path: inset(0% 0 0% 0);   transform: translateX(0);     filter: none; }
+          0%   { clip-path: inset(10% 0 80% 0); transform: translateX(-8px);            filter: hue-rotate(90deg)  brightness(1.5); }
+          20%  { clip-path: inset(60% 0 20% 0); transform: translateX(10px);             filter: hue-rotate(180deg) brightness(2) saturate(3); }
+          40%  { clip-path: inset(30% 0 50% 0); transform: translateX(-5px) skewX(2deg); filter: hue-rotate(270deg) brightness(1.8); }
+          60%  { clip-path: inset(70% 0 5%  0); transform: translateX(12px);             filter: hue-rotate(0deg)   brightness(2.2); }
+          80%  { clip-path: inset(5%  0 70% 0); transform: translateX(-10px);            filter: hue-rotate(90deg)  brightness(1.6); }
+          100% { clip-path: inset(0%  0 0%  0); transform: translateX(0);                filter: none; }
         }
 
-        /* Colored Overlay Flashes */
+        /* Colored overlay slices */
         .glitch-overlay {
           position: absolute;
           inset: 0;
@@ -78,70 +78,22 @@ export default function GlitchProfile({ phase = 'profile' }) {
         }
 
         @keyframes overlaySlices {
-          0%  {
-            clip-path: inset(10% 0 80% 0);
-            transform: translateX(-8px);
-            background: rgba(170,255,0,0.15);
-          }
-          10% {
-            clip-path: inset(60% 0 20% 0);
-            transform: translateX(10px);
-            background: rgba(255,0,80,0.15);
-          }
-          20% {
-            clip-path: inset(30% 0 50% 0);
-            transform: translateX(-5px) skewX(3deg);
-            background: rgba(0,200,255,0.1);
-          }
-          30% {
-            clip-path: inset(70% 0 5% 0);
-            transform: translateX(12px);
-            background: rgba(170,255,0,0.2);
-          }
-          40% {
-            clip-path: inset(5% 0 70% 0);
-            transform: translateX(-10px) skewX(-2deg);
-            background: rgba(255,0,80,0.1);
-          }
-          50% {
-            clip-path: inset(45% 0 30% 0);
-            transform: translateX(6px);
-            background: rgba(170,255,0,0.15);
-          }
-          60% {
-            clip-path: inset(80% 0 2% 0);
-            transform: translateX(-14px) skewX(4deg);
-            background: rgba(0,200,255,0.15);
-          }
-          70% {
-            clip-path: inset(20% 0 60% 0);
-            transform: translateX(8px);
-            background: rgba(170,255,0,0.1);
-          }
-          80% {
-            clip-path: inset(55% 0 15% 0);
-            transform: translateX(-6px) skewX(-3deg);
-            background: rgba(255,0,80,0.2);
-          }
-          90% {
-            clip-path: inset(15% 0 75% 0);
-            transform: translateX(4px);
-            background: rgba(0,200,255,0.1);
-          }
-          100% {
-            clip-path: inset(0% 0 0% 0);
-            transform: translateX(0);
-            opacity: 0;
-          }
+          0%   { clip-path: inset(10% 0 80% 0); transform: translateX(-8px);              background: rgba(170,255,0,0.25); }
+          20%  { clip-path: inset(60% 0 20% 0); transform: translateX(10px);               background: rgba(255,0,80,0.2);   }
+          40%  { clip-path: inset(30% 0 50% 0); transform: translateX(-5px) skewX(3deg);   background: rgba(0,200,255,0.15); }
+          60%  { clip-path: inset(70% 0 5%  0); transform: translateX(12px);               background: rgba(170,255,0,0.25); }
+          80%  { clip-path: inset(5%  0 70% 0); transform: translateX(-10px) skewX(-2deg); background: rgba(255,0,80,0.15);  }
+          100% { clip-path: inset(0%  0 0%  0); transform: translateX(0);                  opacity: 0; }
         }
 
-        /* RGB channel split during glitch */
+        /* RGB channel ghosts */
         .glitch-channel {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
           object-fit: cover;
+          object-position: top center;
           z-index: 8;
           pointer-events: none;
           opacity: 0;
@@ -149,7 +101,7 @@ export default function GlitchProfile({ phase = 'profile' }) {
 
         .glitch-container.phase-glitching .glitch-channel--red,
         .glitch-container.phase-unglitching .glitch-channel--red {
-          opacity: 0.4;
+          opacity: 0.5;
           mix-blend-mode: screen;
           filter: url(#red-shift);
           animation: channelR 0.15s steps(2) forwards;
@@ -157,24 +109,25 @@ export default function GlitchProfile({ phase = 'profile' }) {
 
         .glitch-container.phase-glitching .glitch-channel--blue,
         .glitch-container.phase-unglitching .glitch-channel--blue {
-          opacity: 0.4;
+          opacity: 0.5;
           mix-blend-mode: screen;
+          filter: url(#blue-shift);
           animation: channelB 0.15s steps(2) forwards;
         }
 
         @keyframes channelR {
-          0%   { transform: translateX(-6px); opacity: 0.5; }
-          50%  { transform: translateX(4px);  opacity: 0.3; }
+          0%   { transform: translateX(-8px); opacity: 0.6; }
+          50%  { transform: translateX(5px);  opacity: 0.3; }
           100% { transform: translateX(0);    opacity: 0;   }
         }
 
         @keyframes channelB {
-          0%   { transform: translateX(6px);  opacity: 0.5; }
-          50%  { transform: translateX(-4px); opacity: 0.3; }
+          0%   { transform: translateX(8px);  opacity: 0.6; }
+          50%  { transform: translateX(-5px); opacity: 0.3; }
           100% { transform: translateX(0);    opacity: 0;   }
         }
 
-        /* Scanlines overlay during glitch */
+        /* Scanlines */
         .glitch-scanlines {
           position: absolute;
           inset: 0;
@@ -183,10 +136,8 @@ export default function GlitchProfile({ phase = 'profile' }) {
           opacity: 0;
           background: repeating-linear-gradient(
             to bottom,
-            transparent 0px,
-            transparent 3px,
-            rgba(0,0,0,0.3) 3px,
-            rgba(0,0,0,0.3) 4px
+            transparent 0px, transparent 3px,
+            rgba(0,0,0,0.35) 3px, rgba(0,0,0,0.35) 4px
           );
         }
 
@@ -196,19 +147,19 @@ export default function GlitchProfile({ phase = 'profile' }) {
         }
 
         @keyframes scanPulse {
-          0%   { opacity: 0.8; }
-          50%  { opacity: 0.4; }
+          0%   { opacity: 1;   }
+          50%  { opacity: 0.5; }
           100% { opacity: 0;   }
         }
 
-        /* Green screen flash on glitch start */
+        /* Green flash */
         .glitch-flash {
           position: absolute;
           inset: 0;
           z-index: 11;
           pointer-events: none;
           opacity: 0;
-          background: rgba(170,255,0,0.08);
+          background: rgba(170,255,0,0.1);
         }
 
         .glitch-container.phase-glitching .glitch-flash,
@@ -217,21 +168,19 @@ export default function GlitchProfile({ phase = 'profile' }) {
         }
 
         @keyframes flashPulse {
-          0%   { opacity: 0.6; }
-          30%  { opacity: 0.2; }
+          0%   { opacity: 0.7; }
+          50%  { opacity: 0.3; }
           100% { opacity: 0;   }
         }
       `}</style>
 
-      {/* SVG filter for red channel shift */}
       <svg style={{ position: 'absolute', width: 0, height: 0 }}>
         <defs>
           <filter id="red-shift">
-            <feColorMatrix type="matrix"
-              values="1 0 0 0 0
-                      0 0 0 0 0
-                      0 0 0 0 0
-                      0 0 0 1 0" />
+            <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" />
+          </filter>
+          <filter id="blue-shift">
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" />
           </filter>
         </defs>
       </svg>
@@ -240,25 +189,32 @@ export default function GlitchProfile({ phase = 'profile' }) {
         ref={containerRef}
         className={`glitch-container phase-${phase}`}
       >
-        {/* Profile image */}
+        {/* DEFAULT: grayscale profile photo — always visible at start */}
         <img
           src="/images/profile.png"
           alt="Frank Duff"
           className="glitch-img glitch-img--profile"
         />
 
-        {/* Poster image */}
+        {/* GLITCHES TO: cyber poster */}
         <img
           src="/images/profile-poster-banner.jpg"
           alt="Frank Duff Poster"
           className="glitch-img glitch-img--poster"
         />
 
-        {/* RGB channel ghosts */}
-        <img src={showPoster ? "/images/profile-poster-banner.jpg" : "/images/profile.png"} className="glitch-channel glitch-channel--red" alt="" />
-        <img src={showPoster ? "/images/profile-poster-banner.jpg" : "/images/profile.png"} className="glitch-channel glitch-channel--blue" alt="" />
+        {/* RGB ghost channels */}
+        <img
+          src={showPoster ? "/images/profile-poster-banner.jpg" : "/images/profile.png"}
+          className="glitch-channel glitch-channel--red"
+          alt=""
+        />
+        <img
+          src={showPoster ? "/images/profile-poster-banner.jpg" : "/images/profile.png"}
+          className="glitch-channel glitch-channel--blue"
+          alt=""
+        />
 
-        {/* Glitch overlays */}
         <div className="glitch-overlay" />
         <div className="glitch-scanlines" />
         <div className="glitch-flash" />

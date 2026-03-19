@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import GlitchProfile from './GlitchProfile';
-import GlitchPoster from './GlitchPoster';
 
 const About = () => {
     const skills = [
@@ -14,81 +13,146 @@ const About = () => {
     const [posterGlitch, setPosterGlitch] = useState(false);
 
     useEffect(() => {
+        let cycleTimeout;
+
         const cycle = () => {
-            // SNAP to glitching instantly
+            // Glitch in
             setPhase('glitching');
             setPosterGlitch(true);
 
-            // After 150ms glitch → show poster
-            setTimeout(() => {
+            // Show poster after glitch (0.15s)
+            cycleTimeout = setTimeout(() => {
                 setPhase('poster');
                 setPosterGlitch(false);
 
-                // Hold poster for 1.5s then glitch back
-                setTimeout(() => {
+                // Hold poster for exactly 0.5s as previously requested
+                cycleTimeout = setTimeout(() => {
+                    // Glitch out
                     setPhase('unglitching');
                     setPosterGlitch(true);
 
-                    // After 150ms glitch → back to profile
-                    setTimeout(() => {
+                    // Return to clean profile (0.15s)
+                    cycleTimeout = setTimeout(() => {
                         setPhase('profile');
                         setPosterGlitch(false);
-                    }, 150);
 
-                }, 1500);
+                        // Stay on default profile for 4 seconds before looping
+                        cycleTimeout = setTimeout(cycle, 4000);
+                    }, 150);
+                }, 500); // <-- 0.5 sec poster visibility
             }, 150);
         };
 
-        // NO initial delay — starts immediately on load
-        cycle();
+        // Start correctly with profile Default, delay first glitch
+        setPhase('profile');
+        cycleTimeout = setTimeout(cycle, 2000);
 
-        // Loops every 3.5s (150 + 1500 + 150 + buffer)
-        const interval = setInterval(cycle, 3500);
-
-        return () => clearInterval(interval);
+        return () => clearTimeout(cycleTimeout);
     }, []);
 
     return (
-        <section id="about" className="py-32 px-6 bg-[#060806] relative overflow-hidden">
-            <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
-                {/* Image Section */}
-                <motion.div
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    style={{ position: 'relative', width: '45%', display: 'flex', flexDirection: 'column', gap: '24px' }}
-                >
-                    <GlitchProfile phase={phase} />
-                    <GlitchPoster isGlitching={posterGlitch} />
-                </motion.div>
+        <section
+            id="about"
+            style={{
+                padding: '80px 24px',        /* controlled padding — no excess */
+                background: '#060806',
+                position: 'relative',
+                overflow: 'hidden',
+            }}
+        >
+            <div style={{
+                maxWidth: '1280px',
+                margin: '0 auto',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: '60px',
+                flexWrap: 'wrap',
+            }}>
 
-                {/* Content Section */}
+                {/* ── LEFT COLUMN ── */}
+                <div style={{
+                    flexShrink: 0,
+                    width: '400px',          /* fixed width */
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '16px',
+                }}>
+                    {/* Profile card — tall enough to show face */}
+                    <div style={{ width: '400px', height: '500px' }}>
+                        <GlitchProfile phase={phase} />
+                    </div>
+                </div>
+
+                {/* ── RIGHT COLUMN ── */}
                 <motion.div
                     initial={{ opacity: 0, x: 30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="w-full lg:w-1/2"
+                    style={{ flex: 1, minWidth: '280px' }}
                 >
-                    <h2 className="text-accent-green font-display text-lg font-bold tracking-widest uppercase mb-4">About Me</h2>
-                    <h3 className="text-5xl md:text-7xl font-display font-black text-white italic uppercase mb-8">Creative Designer</h3>
+                    <h2 style={{
+                        color: '#aaff00',
+                        fontSize: '14px',
+                        fontWeight: 700,
+                        letterSpacing: '0.15em',
+                        textTransform: 'uppercase',
+                        marginBottom: '16px',
+                    }}>
+                        About Me
+                    </h2>
+                    <h3 style={{
+                        fontSize: 'clamp(36px, 5vw, 64px)',
+                        fontWeight: 900,
+                        color: 'white',
+                        fontStyle: 'italic',
+                        textTransform: 'uppercase',
+                        marginBottom: '24px',
+                        lineHeight: 1.1,
+                    }}>
+                        Creative Designer
+                    </h3>
 
-                    <p className="text-gray-400 text-lg leading-relaxed mb-10">
-                        I'm HITAYEZU FRANK DUFF, a passionate Visual & Digital Designer with over 1.5 years of experience crafting premium digital experiences. I specialize in merging aesthetics with functionality to create interfaces that not only look stunning but also feel alive. I am specialized in digital art using graphic tablets - since that's how I create my graphics.
+                    <p style={{
+                        color: 'rgba(255,255,255,0.5)',
+                        fontSize: '17px',
+                        lineHeight: 1.75,
+                        marginBottom: '32px',
+                    }}>
+                        I'm HITAYEZU FRANK DUFF, a passionate Visual & Digital Designer with over
+                        1.5 years of experience crafting premium digital experiences. I specialize
+                        in merging aesthetics with functionality to create interfaces that not only
+                        look stunning but also feel alive. I am specialized in digital art using
+                        graphic tablets – since that's how I create my graphics.
                     </p>
 
-                    <div className="flex flex-wrap gap-3">
-                        {skills.map((skill, index) => (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                        {skills.map((skill) => (
                             <span
                                 key={skill}
-                                className="px-5 py-2 rounded-full glass-card border-white/10 text-[10px] font-bold text-white uppercase tracking-widest hover:border-accent-green transition-colors"
+                                style={{
+                                    padding: '8px 18px',
+                                    borderRadius: '999px',
+                                    border: '1px solid rgba(255,255,255,0.15)',
+                                    fontSize: '10px',
+                                    fontWeight: 700,
+                                    color: 'white',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.1em',
+                                    background: 'rgba(255,255,255,0.04)',
+                                    cursor: 'default',
+                                    transition: 'border-color 0.2s',
+                                }}
+                                onMouseEnter={e => e.target.style.borderColor = '#aaff00'}
+                                onMouseLeave={e => e.target.style.borderColor = 'rgba(255,255,255,0.15)'}
                             >
                                 {skill}
                             </span>
                         ))}
                     </div>
                 </motion.div>
+
             </div>
         </section>
     );

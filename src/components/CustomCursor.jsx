@@ -130,7 +130,7 @@ export default function CustomCursor() {
                 borderRadius: '50%',
                 position: 'fixed',
                 pointerEvents: 'none',
-                zIndex: 99999,
+                zIndex: 999999,
                 top: -10, left: -10, // hidden initially
                 transform: 'translate(-50%, -50%)',
                 transition: 'opacity 0.3s ease',
@@ -142,7 +142,7 @@ export default function CustomCursor() {
                 borderRadius: '50%',
                 position: 'fixed',
                 pointerEvents: 'none',
-                zIndex: 99998,
+                zIndex: 999998,
                 top: -100, left: -100, // hidden initially
                 transform: 'translate(-50%, -50%)',
                 transition: 'width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease, opacity 0.3s ease',
