@@ -1,32 +1,29 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Projects from './components/Projects';
-import Logos from './components/Logos';
-import Banners from './components/Banners';
-import About from './components/About';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Home from './pages/Home';
+import AllProjects from './pages/AllProjects';
 
 function App() {
     return (
-        <div className="relative min-h-screen bg-background">
-            <div className="bg-glow" />
-            <div className="bg-noise" />
+        <Router>
+            <div className="relative min-h-screen bg-background text-white selection:bg-accent-green selection:text-black">
+                <div className="bg-glow" />
+                <div className="bg-noise" />
 
-            <Navbar />
+                <Navbar />
 
-            <main>
-                <Hero />
-                <Projects />
-                <Logos />
-                <Banners />
-                <About />
-                <Contact />
-            </main>
+                <main>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/projects" element={<AllProjects />} />
+                    </Routes>
+                </main>
 
-            <Footer />
-        </div>
+                <Footer />
+            </div>
+        </Router>
     );
 }
 

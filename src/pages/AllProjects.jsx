@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const Projects = () => {
-    const allProjects = [
+const AllProjects = () => {
+    // Use the same project list but show all
+    const projects = [
         {
             title: 'StockWise',
             description: 'StockWise provides real-time tracking, data-driven insights, and transparent planning for farmers, veterinarians, and authorities across the nation.',
@@ -46,20 +47,28 @@ const Projects = () => {
         }
     ];
 
-    // Limit display to first 4 projects
-    const projects = allProjects.slice(0, 4);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
-        <section id="work" className="py-32 px-6 bg-[#0a0a0a]">
+        <section className="py-32 px-6 bg-[#0a0a0a] min-h-screen">
             <div className="max-w-7xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="mb-20"
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8"
                 >
-                    <h2 className="text-accent-green font-display text-lg font-bold tracking-widest uppercase mb-4">Selected Work</h2>
-                    <h3 className="text-5xl md:text-7xl font-display font-black text-white italic uppercase underline decoration-accent-green/30">Figma Projects</h3>
+                    <div>
+                        <Link to="/" className="text-accent-green text-sm font-bold uppercase tracking-widest mb-8 inline-block hover:underline">
+                            ← Back to Home
+                        </Link>
+                        <h2 className="text-accent-green font-display text-lg font-bold tracking-widest uppercase mb-4">Portfolio Archive</h2>
+                        <h3 className="text-5xl md:text-7xl font-display font-black text-white italic uppercase underline decoration-accent-green/30">All Figma Projects</h3>
+                    </div>
+                    <p className="text-gray-500 max-w-sm">
+                        A complete collection of my design explorations, from initial wireframes to high-fidelity interactive prototypes.
+                    </p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -67,8 +76,7 @@ const Projects = () => {
                         <motion.div
                             key={project.title}
                             initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1 }}
                             className="group relative"
                         >
@@ -121,27 +129,9 @@ const Projects = () => {
                         </motion.div>
                     ))}
                 </div>
-
-                {/* View Full Projects Button */}
-                {allProjects.length > 4 && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="mt-20 text-center"
-                    >
-                        <Link
-                            to="/projects"
-                            className="inline-flex items-center gap-4 px-12 py-6 bg-accent-green font-display font-black text-black uppercase tracking-[0.2em] rounded-2xl hover:bg-white transition-all transform hover:-translate-y-1 shadow-2xl shadow-accent-green/20"
-                        >
-                            View Full Projects Archive
-                            <span className="text-xl">→</span>
-                        </Link>
-                    </motion.div>
-                )}
             </div>
         </section>
     );
 };
 
-export default Projects;
+export default AllProjects;
