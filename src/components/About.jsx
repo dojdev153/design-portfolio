@@ -36,8 +36,8 @@ const About = () => {
                         setPhase('profile');
                         setPosterGlitch(false);
 
-                        // Stay on default profile for 4 seconds before looping
-                        cycleTimeout = setTimeout(cycle, 4000);
+                        // Stay on default profile for 0.5 seconds before looping to poster
+                        cycleTimeout = setTimeout(cycle, 500);
                     }, 150);
                 }, 500); // <-- 0.5 sec poster visibility
             }, 150);
@@ -45,7 +45,7 @@ const About = () => {
 
         // Start correctly with profile Default, delay first glitch
         setPhase('profile');
-        cycleTimeout = setTimeout(cycle, 2000);
+        cycleTimeout = setTimeout(cycle, 500);
 
         return () => clearTimeout(cycleTimeout);
     }, []);
