@@ -38,9 +38,13 @@ const Hero = () => {
                     {/* Revolving Tools Container */}
                     <div className="relative mb-8 flex items-center justify-center">
                         {/* Profile Image */}
-                        <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-accent-green shadow-[0_0_30px_rgba(170,255,0,0.3)] relative z-10">
+                        <motion.div
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            className="w-48 h-48 rounded-full overflow-hidden border-4 border-accent-green shadow-[0_0_30px_rgba(170,255,0,0.3)] relative z-10"
+                        >
                             <img src="/images/profile.png" alt="Frank Duff" className="w-full h-full object-cover" />
-                        </div>
+                        </motion.div>
 
                         {/* Revolving Tools */}
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -99,9 +103,7 @@ const Hero = () => {
                             HITAYEZU FRANK DUFF
                         </div>
                         <div className="flex gap-3 items-center">
-                            <span className="text-xl filter drop-shadow-[0_0_8px_rgba(255,0,0,0.5)]">🔖</span>
-                            <span className="text-xl filter drop-shadow-[0_0_8px_rgba(255,0,0,0.5)]">❤️</span>
-                            <span className="text-xl filter drop-shadow-[0_0_8px_rgba(0,170,255,0.5)]">↗️</span>
+                            {/* Icons removed as requested */}
                         </div>
                     </div>
                 </motion.div>
