@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import AllProjects from './pages/AllProjects';
 import CustomCursor from './components/CustomCursor';
 import CornerRipples from './components/CornerRipples';
+import BackgroundAudio from './components/BackgroundAudio';
 import './styles/ripples.css'; // Import the new ripple styles
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
             <div className="relative min-h-screen bg-background text-white selection:bg-accent-green selection:text-black">
                 <CustomCursor />
                 <CornerRipples />
+                <BackgroundAudio />
                 <div className="bg-glow" />
                 <div className="bg-noise" />
 
