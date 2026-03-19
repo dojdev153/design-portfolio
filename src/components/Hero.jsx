@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import StarField from './StarField';
 import TypeOnce from './TypeOnce';
+import ExperienceCounter from './ExperienceCounter';
 import useTypewriter from '../hooks/useTypewriter';
 
 const SWITCHING_WORDS = [
@@ -180,8 +181,7 @@ const Hero = () => {
                             <div className="w-5 h-5 bg-white rounded"></div>
                         </div>
                         <div className="text-sm">
-                            <span className="text-gray-500 mr-2">Experience:</span>
-                            <span className="font-bold">1.5 Years</span>
+                            <ExperienceCounter />
                         </div>
                     </div>
                 </div>
