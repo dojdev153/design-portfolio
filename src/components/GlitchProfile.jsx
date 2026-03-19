@@ -37,14 +37,32 @@ export default function GlitchProfile({ phase = 'profile' }) {
         }
 
         /* Poster visible */
-        .glitch-container.phase-poster .glitch-img--poster {
+        .glitch-container.phase-poster .glitch-img--poster,
+        .glitch-container.phase-unglitching .glitch-img--poster {
           opacity: 1;
         }
-        .glitch-container.phase-poster .glitch-img--profile {
+        .glitch-container.phase-poster .glitch-img--profile,
+        .glitch-container.phase-unglitching .glitch-img--profile {
           opacity: 0;
         }
 
-        /* ── Glitch slices ── */
+        /* ── True Image Glitch Slices ── */
+        .glitch-container.phase-glitching .glitch-img,
+        .glitch-container.phase-unglitching .glitch-img {
+          animation: imageSlices 0.15s steps(1) forwards;
+        }
+
+        @keyframes imageSlices {
+          0%   { clip-path: inset(10% 0 80% 0); transform: translateX(-8px);  filter: hue-rotate(90deg)  brightness(1.3); }
+          15%  { clip-path: inset(60% 0 20% 0); transform: translateX(10px);  filter: hue-rotate(180deg) brightness(1.1); }
+          30%  { clip-path: inset(30% 0 50% 0); transform: translateX(-5px) skewX(2deg); filter: hue-rotate(270deg); }
+          45%  { clip-path: inset(70% 0 5% 0);  transform: translateX(12px);  filter: hue-rotate(0deg)   brightness(1.4); }
+          60%  { clip-path: inset(5% 0 70% 0);  transform: translateX(-10px); filter: hue-rotate(90deg); }
+          75%  { clip-path: inset(45% 0 30% 0); transform: translateX(6px);   filter: brightness(1.2); }
+          100% { clip-path: inset(0% 0 0% 0);   transform: translateX(0);     filter: none; }
+        }
+
+        /* Colored Overlay Flashes */
         .glitch-overlay {
           position: absolute;
           inset: 0;
@@ -56,10 +74,10 @@ export default function GlitchProfile({ phase = 'profile' }) {
         .glitch-container.phase-glitching .glitch-overlay,
         .glitch-container.phase-unglitching .glitch-overlay {
           opacity: 1;
-          animation: glitchSlices 0.6s steps(1) forwards;
+          animation: overlaySlices 0.15s steps(1) forwards;
         }
 
-        @keyframes glitchSlices {
+        @keyframes overlaySlices {
           0%  {
             clip-path: inset(10% 0 80% 0);
             transform: translateX(-8px);
@@ -134,14 +152,14 @@ export default function GlitchProfile({ phase = 'profile' }) {
           opacity: 0.4;
           mix-blend-mode: screen;
           filter: url(#red-shift);
-          animation: channelR 0.6s steps(2) forwards;
+          animation: channelR 0.15s steps(2) forwards;
         }
 
         .glitch-container.phase-glitching .glitch-channel--blue,
         .glitch-container.phase-unglitching .glitch-channel--blue {
           opacity: 0.4;
           mix-blend-mode: screen;
-          animation: channelB 0.6s steps(2) forwards;
+          animation: channelB 0.15s steps(2) forwards;
         }
 
         @keyframes channelR {
@@ -174,7 +192,7 @@ export default function GlitchProfile({ phase = 'profile' }) {
 
         .glitch-container.phase-glitching .glitch-scanlines,
         .glitch-container.phase-unglitching .glitch-scanlines {
-          animation: scanPulse 0.6s steps(3) forwards;
+          animation: scanPulse 0.15s steps(3) forwards;
         }
 
         @keyframes scanPulse {
@@ -195,7 +213,7 @@ export default function GlitchProfile({ phase = 'profile' }) {
 
         .glitch-container.phase-glitching .glitch-flash,
         .glitch-container.phase-unglitching .glitch-flash {
-          animation: flashPulse 0.6s ease-out forwards;
+          animation: flashPulse 0.15s steps(1) forwards;
         }
 
         @keyframes flashPulse {

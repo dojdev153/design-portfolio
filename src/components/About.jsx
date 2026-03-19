@@ -15,33 +15,37 @@ const About = () => {
 
     useEffect(() => {
         const cycle = () => {
-            // Trigger BOTH at the same time
+            // SNAP to glitching instantly
             setPhase('glitching');
             setPosterGlitch(true);
 
-            // Phase 2: Show poster cleanly (after 0.6s glitch-in)
+            // After 150ms glitch → show poster
             setTimeout(() => {
                 setPhase('poster');
                 setPosterGlitch(false);
-            }, 600);
 
-            // Phase 3: Glitch back out (after 0.6s in + 0.5s hold = 1.1s)
-            setTimeout(() => {
-                setPhase('unglitching');
-                setPosterGlitch(true);
-
-                // Phase 4: Back to profile cleanly (after another 0.6s glitch-out)
+                // Hold poster for 1.5s then glitch back
                 setTimeout(() => {
-                    setPhase('profile');
-                    setPosterGlitch(false);
-                }, 600);
-            }, 1100);
+                    setPhase('unglitching');
+                    setPosterGlitch(true);
+
+                    // After 150ms glitch → back to profile
+                    setTimeout(() => {
+                        setPhase('profile');
+                        setPosterGlitch(false);
+                    }, 150);
+
+                }, 1500);
+            }, 150);
         };
 
-        const initial = setTimeout(cycle, 5000);
-        const interval = setInterval(cycle, 6700);
+        // NO initial delay — starts immediately on load
+        cycle();
 
-        return () => { clearTimeout(initial); clearInterval(interval); };
+        // Loops every 3.5s (150 + 1500 + 150 + buffer)
+        const interval = setInterval(cycle, 3500);
+
+        return () => clearInterval(interval);
     }, []);
 
     return (
@@ -53,12 +57,9 @@ const About = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="w-full lg:w-1/2 flex flex-col gap-6 relative"
+                    style={{ position: 'relative', width: '45%', display: 'flex', flexDirection: 'column', gap: '24px' }}
                 >
-                    <div className="rounded-[40px] overflow-hidden glass-card border-white/10 aspect-[4/5] md:aspect-square group shadow-2xl relative">
-                        <GlitchProfile phase={phase} />
-                    </div>
-
+                    <GlitchProfile phase={phase} />
                     <GlitchPoster isGlitching={posterGlitch} />
                 </motion.div>
 
