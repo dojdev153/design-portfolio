@@ -10,6 +10,7 @@
 
 body {
   @apply bg-background text-white font-sans overflow-x-hidden;
+  background: #060806;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

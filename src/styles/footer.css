@@ -1,0 +1,61 @@
+.footer-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0;
+    background: transparent;
+    /* Changed to transparent for seamless blending */
+    margin-top: 100px;
+}
+
+/* The giant background name */
+.footer-bg-text {
+    font-size: clamp(80px, 18vw, 220px);
+    /* scales with screen */
+    font-weight: 900;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    line-height: 0.8;
+    /* Reduced line-height to pull it closer to bottom */
+    text-align: center;
+    width: 100%;
+    margin-bottom: -0.1em;
+    /* Negative margin to bleed slightly */
+
+    /* Corrected Gradient — bright top fading to transparent bottom */
+    background: linear-gradient(to bottom,
+            rgba(170, 255, 0, 0.9) 0%,
+            /* Bright lime green top */
+            rgba(170, 255, 0, 0.4) 50%,
+            rgba(170, 255, 0, 0) 100%
+            /* Transparent bottom */
+        );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    /* Reflection effect below */
+    -webkit-box-reflect: below 0px linear-gradient(to bottom,
+            transparent 40%,
+            rgba(0, 0, 0, 0.3) 100%);
+
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Copyright text floats centered over the name */
+.footer-copyright {
+    position: absolute;
+    bottom: 28%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.05em;
+    z-index: 2;
+}
