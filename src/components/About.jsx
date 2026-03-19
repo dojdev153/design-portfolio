@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import GlitchProfile from './GlitchProfile';
+import GlitchPoster from './GlitchPoster';
 
 const About = () => {
     const skills = [
@@ -7,6 +9,40 @@ const About = () => {
         'Figma', 'Photoshop', 'Adobe XD', 'Framer', 'Canva',
         'Logo Design', 'Web Design', 'Typography', 'Illustration', 'Digital Art'
     ];
+
+    const [phase, setPhase] = useState('profile');
+    const [posterGlitch, setPosterGlitch] = useState(false);
+
+    useEffect(() => {
+        const cycle = () => {
+            // Trigger BOTH at the same time
+            setPhase('glitching');
+            setPosterGlitch(true);
+
+            // Phase 2: Show poster cleanly (after 0.6s glitch-in)
+            setTimeout(() => {
+                setPhase('poster');
+                setPosterGlitch(false);
+            }, 600);
+
+            // Phase 3: Glitch back out (after 0.6s in + 0.5s hold = 1.1s)
+            setTimeout(() => {
+                setPhase('unglitching');
+                setPosterGlitch(true);
+
+                // Phase 4: Back to profile cleanly (after another 0.6s glitch-out)
+                setTimeout(() => {
+                    setPhase('profile');
+                    setPosterGlitch(false);
+                }, 600);
+            }, 1100);
+        };
+
+        const initial = setTimeout(cycle, 5000);
+        const interval = setInterval(cycle, 6700);
+
+        return () => { clearTimeout(initial); clearInterval(interval); };
+    }, []);
 
     return (
         <section id="about" className="py-32 px-6 bg-[#060806] relative overflow-hidden">
@@ -17,15 +53,13 @@ const About = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="w-full lg:w-1/2"
+                    className="w-full lg:w-1/2 flex flex-col gap-6 relative"
                 >
-                    <div className="rounded-[40px] overflow-hidden glass-card border-white/10 aspect-[4/5] md:aspect-square group shadow-2xl">
-                        <img
-                            src="/images/profile.png"
-                            alt="HITAYEZU FRANK DUFF"
-                            className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
-                        />
+                    <div className="rounded-[40px] overflow-hidden glass-card border-white/10 aspect-[4/5] md:aspect-square group shadow-2xl relative">
+                        <GlitchProfile phase={phase} />
                     </div>
+
+                    <GlitchPoster isGlitching={posterGlitch} />
                 </motion.div>
 
                 {/* Content Section */}
