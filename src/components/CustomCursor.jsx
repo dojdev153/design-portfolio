@@ -8,17 +8,23 @@ export default function CustomCursor() {
         const dot = dotRef.current
         const ring = ringRef.current
 
-        // Skip on touch devices
-        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return
+        // Ensure visible
+        if (dot) dot.style.opacity = '1';
+        if (ring) ring.style.opacity = '1';
 
         let mouseX = 0, mouseY = 0
         let ringX = 0, ringY = 0
         let animId
 
+        console.log('CustomCursor: Component Mounted');
+        console.log('dot element:', dot);
+        console.log('ring element:', ring);
+
         // Dot follows instantly
         const onMove = (e) => {
             mouseX = e.clientX
             mouseY = e.clientY
+            // console.log('mouse:', mouseX, mouseY); // verbose
             if (dot) {
                 dot.style.left = mouseX + 'px'
                 dot.style.top = mouseY + 'px'

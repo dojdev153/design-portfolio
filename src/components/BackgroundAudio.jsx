@@ -1,60 +1,60 @@
 import { useEffect, useRef, useState } from 'react'
 
 export default function BackgroundAudio() {
-    const audioRef = useRef(null)
-    const [playing, setPlaying] = useState(false)
-    const [volume, setVolume] = useState(0.3)   // 30% default — not too loud
+  const audioRef = useRef(null)
+  const [playing, setPlaying] = useState(false)
+  const [volume, setVolume] = useState(0.3)   // 30% default — not too loud
 
-    useEffect(() => {
-        const audio = audioRef.current
-        audio.volume = volume
-        audio.loop = true
+  useEffect(() => {
+    const audio = audioRef.current
+    audio.volume = volume
+    audio.loop = true
 
-        // Browsers block autoplay until user interacts with page
-        // This tries to play on first ANY click/key anywhere on the page
-        const tryPlay = () => {
-            audio.play()
-                .then(() => {
-                    setPlaying(true)
-                    // Remove listeners once playing starts
-                    document.removeEventListener('click', tryPlay)
-                    document.removeEventListener('keydown', tryPlay)
-                    document.removeEventListener('scroll', tryPlay)
-                })
-                .catch(() => { }) // silently ignore if blocked
-        }
-
-        document.addEventListener('click', tryPlay)
-        document.addEventListener('keydown', tryPlay)
-        document.addEventListener('scroll', tryPlay)
-
-        return () => {
-            document.removeEventListener('click', tryPlay)
-            document.removeEventListener('keydown', tryPlay)
-            document.removeEventListener('scroll', tryPlay)
-            audio.pause()
-        }
-    }, [])
-
-    // Sync volume changes
-    useEffect(() => {
-        if (audioRef.current) audioRef.current.volume = volume
-    }, [volume])
-
-    const toggle = () => {
-        const audio = audioRef.current
-        if (playing) {
-            audio.pause()
-            setPlaying(false)
-        } else {
-            audio.play()
-            setPlaying(true)
-        }
+    // Browsers block autoplay until user interacts with page
+    // This tries to play on first ANY click/key anywhere on the page
+    const tryPlay = () => {
+      audio.play()
+        .then(() => {
+          setPlaying(true)
+          // Remove listeners once playing starts
+          document.removeEventListener('click', tryPlay)
+          document.removeEventListener('keydown', tryPlay)
+          document.removeEventListener('scroll', tryPlay)
+        })
+        .catch(() => { }) // silently ignore if blocked
     }
 
-    return (
-        <>
-            <style>{`
+    document.addEventListener('click', tryPlay)
+    document.addEventListener('keydown', tryPlay)
+    document.addEventListener('scroll', tryPlay)
+
+    return () => {
+      document.removeEventListener('click', tryPlay)
+      document.removeEventListener('keydown', tryPlay)
+      document.removeEventListener('scroll', tryPlay)
+      audio.pause()
+    }
+  }, [])
+
+  // Sync volume changes
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = volume
+  }, [volume])
+
+  const toggle = () => {
+    const audio = audioRef.current
+    if (playing) {
+      audio.pause()
+      setPlaying(false)
+    } else {
+      audio.play()
+      setPlaying(true)
+    }
+  }
+
+  return (
+    <>
+      <style>{`
         .audio-control {
           position: fixed;
           bottom: 28px;
@@ -165,50 +165,50 @@ export default function BackgroundAudio() {
         }
       `}</style>
 
-            {/* Hidden audio element */}
-            <audio ref={audioRef} src="/audio/background.mp3" preload="auto" />
+      {/* Hidden audio element */}
+      <audio ref={audioRef} src="/audio/background.mp3" preload="auto" />
 
-            {/* Fixed bottom-right control */}
-            <div className="audio-control">
+      {/* Fixed bottom-right control */}
+      <div className="audio-control">
 
-                {/* Volume slider — slides out on hover */}
-                <div className="audio-slider-wrap">
-                    <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={volume}
-                        onChange={e => setVolume(parseFloat(e.target.value))}
-                        className="audio-slider"
-                    />
-                </div>
+        {/* Volume slider — slides out on hover */}
+        <div className="audio-slider-wrap">
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={e => setVolume(parseFloat(e.target.value))}
+            className="audio-slider"
+          />
+        </div>
 
-                {/* Play / Pause button */}
-                <button
-                    onClick={toggle}
-                    className={`audio-btn ${playing ? 'is-playing' : ''}`}
-                    title={playing ? 'Pause music' : 'Play music'}
-                >
-                    {playing ? (
-                        /* Animated sound bars when playing */
-                        <div className="sound-bars">
-                            <div className="sound-bar" style={{ height: '4px' }} />
-                            <div className="sound-bar" style={{ height: '10px' }} />
-                            <div className="sound-bar" style={{ height: '6px' }} />
-                            <div className="sound-bar" style={{ height: '12px' }} />
-                        </div>
-                    ) : (
-                        /* Static mute icon when paused */
-                        <svg className="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                            <line x1="23" y1="9" x2="17" y2="15" />
-                            <line x1="17" y1="9" x2="23" y2="15" />
-                        </svg>
-                    )}
-                </button>
-
+        {/* Play / Pause button */}
+        <button
+          onClick={toggle}
+          className={`audio-btn ${playing ? 'is-playing' : ''}`}
+          title={playing ? 'Pause music' : 'Play music'}
+        >
+          {playing ? (
+            /* Animated sound bars when playing */
+            <div className="sound-bars">
+              <div className="sound-bar" style={{ height: '4px' }} />
+              <div className="sound-bar" style={{ height: '10px' }} />
+              <div className="sound-bar" style={{ height: '6px' }} />
+              <div className="sound-bar" style={{ height: '12px' }} />
             </div>
-        </>
-    )
+          ) : (
+            /* Static mute icon when paused */
+            <svg className="mute-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <line x1="23" y1="9" x2="17" y2="15" />
+              <line x1="17" y1="9" x2="23" y2="15" />
+            </svg>
+          )}
+        </button>
+
+      </div>
+    </>
+  )
 }
